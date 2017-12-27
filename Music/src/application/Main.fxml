@@ -21,7 +21,7 @@
          <children>
             <ImageView fitHeight="288.0" fitWidth="456.0">
                <image>
-                  <Image url="@../../Pictures/background.jpg" />
+                  <Image url="@../Pictures/background.jpg" />
                </image>
             </ImageView>
             <FontAwesomeIconView fill="RED" glyphName="PLAY" layoutX="222.0" layoutY="248.0" size="25" />
@@ -33,7 +33,7 @@
             <JFXButton fx:id="playButton" layoutX="214.0" layoutY="224.0" prefHeight="31.0" prefWidth="32.0" style="-fx-background-radius: 5em;" textFill="RED" />
             <JFXButton fx:id="btn_exit" layoutX="421.0" layoutY="3.0" onMouseClicked="#handleButtonAction" prefHeight="31.0" prefWidth="26.0" style="-fx-background-radius: 5em;" textFill="RED" />
             <JFXButton fx:id="playlistMenu" layoutX="366.0" layoutY="3.0" onMouseClicked="#handleButtonAction" prefHeight="31.0" prefWidth="26.0" style="-fx-background-radius: 5em;" textFill="RED" />
-            <JFXButton fx:id="prevButton" layoutX="138.0" layoutY="226.0" onMouseClicked="#handleButtonAction" prefHeight="0.0" prefWidth="0.0" style="-fx-background-radius: 5em;" textFill="RED" />
+            <JFXButton fx:id="prevButton" layoutX="139.0" layoutY="226.0" onMouseClicked="#handleButtonAction" prefHeight="0.0" prefWidth="0.0" style="-fx-background-radius: 5em;" textFill="RED" />
             <JFXButton fx:id="nextButton" layoutX="299.0" layoutY="225.0" onMouseClicked="#handleButtonAction" prefHeight="0.0" prefWidth="0.0" style="-fx-background-radius: 5em;" textFill="RED" />
             <FontAwesomeIconView fill="RED" glyphName="MINUS" layoutX="400.0" layoutY="25.0" size="20" />
             <JFXButton fx:id="btn_minimize" layoutX="395.0" layoutY="2.0" onMouseClicked="#handleButtonAction" prefHeight="31.0" prefWidth="26.0" style="-fx-background-radius: 5em;" textFill="RED" />
@@ -51,7 +51,7 @@
                      </font>
                   </Label>
                   <FontAwesomeIconView fill="#0c1028" glyphName="TIMES" layoutX="294.0" layoutY="34.0" size="20" />
-                  <JFXButton fx:id="btn_exit_playlist" layoutX="289.0" layoutY="11.0" onMouseClicked="#handleButtonAction" prefHeight="31.0" prefWidth="26.0" style="-fx-background-radius: 5em;" textFill="RED" />
+                  <JFXButton fx:id="btn_exit_playlist" layoutX="288.0" layoutY="12.0" onMouseClicked="#handleButtonAction" prefHeight="31.0" prefWidth="26.0" style="-fx-background-radius: 5em;" textFill="#363636" />
                </children>
             </Pane>
             <JFXButton fx:id="removeButton" layoutX="77.0" layoutY="60.0" text="Remove" textFill="RED" />
