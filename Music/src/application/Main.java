@@ -15,7 +15,6 @@ public class Main extends Application {
 	public static Main current;
 	private double xOffset = 0;
     private double yOffset = 0;
-
 	@Override
 	public void start(Stage stage) {
 		current = this;
@@ -41,7 +40,8 @@ public class Main extends Application {
                stage.setY(event.getScreenY() - yOffset);
             }
             });
-			
+            
+            
 			Scene scene = new Scene(root);
 			scene.setFill(Color.TRANSPARENT);
 			stage.setScene(scene);
@@ -59,4 +59,6 @@ public class Main extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
+	
+	
 }

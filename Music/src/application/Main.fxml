@@ -24,13 +24,13 @@
                   <Image url="@../Pictures/background.jpg" />
                </image>
             </ImageView>
-            <FontAwesomeIconView fill="RED" glyphName="PLAY" layoutX="222.0" layoutY="248.0" size="25" />
+            <FontAwesomeIconView fx:id="playIcon" fill="RED" glyphName="PLAY" layoutX="222.0" layoutY="248.0" size="25" />
             <FontAwesomeIconView fill="RED" glyphName="CHEVRON_RIGHT" layoutX="304.0" layoutY="246.0" size="15" />
             <FontAwesomeIconView fill="RED" glyphName="CHEVRON_LEFT" layoutX="143.0" layoutY="247.0" size="15" text="" />
             <FontAwesomeIconView fill="RED" glyphName="BARS" layoutX="370.0" layoutY="25.0" size="20" />
-            <JFXSlider fx:id="slider" focusTraversable="false" layoutX="45.0" layoutY="196.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="18.0" prefWidth="371.0" stylesheets="@application.css" value="1.0" />
+            <JFXSlider fx:id="slider" focusTraversable="false" layoutX="45.0" layoutY="196.0" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#handleButtonAction" prefHeight="18.0" prefWidth="371.0" stylesheets="@application.css" value="1.0" />
             <FontAwesomeIconView fill="RED" glyphName="TIMES" layoutX="426.0" layoutY="24.0" size="20" />
-            <JFXButton fx:id="playButton" layoutX="214.0" layoutY="224.0" prefHeight="31.0" prefWidth="32.0" style="-fx-background-radius: 5em;" textFill="RED" />
+            <JFXButton fx:id="playButton" layoutX="214.0" layoutY="224.0" onMouseClicked="#handleButtonAction" prefHeight="31.0" prefWidth="32.0" style="-fx-background-radius: 5em;" textFill="RED" />
             <JFXButton fx:id="btn_exit" layoutX="421.0" layoutY="3.0" onMouseClicked="#handleButtonAction" prefHeight="31.0" prefWidth="26.0" style="-fx-background-radius: 5em;" textFill="RED" />
             <JFXButton fx:id="playlistMenu" layoutX="366.0" layoutY="3.0" onMouseClicked="#handleButtonAction" prefHeight="31.0" prefWidth="26.0" style="-fx-background-radius: 5em;" textFill="RED" />
             <JFXButton fx:id="prevButton" layoutX="139.0" layoutY="226.0" onMouseClicked="#handleButtonAction" prefHeight="0.0" prefWidth="0.0" style="-fx-background-radius: 5em;" textFill="RED" />
@@ -38,7 +38,7 @@
             <FontAwesomeIconView fill="RED" glyphName="MINUS" layoutX="400.0" layoutY="25.0" size="20" />
             <JFXButton fx:id="btn_minimize" layoutX="395.0" layoutY="2.0" onMouseClicked="#handleButtonAction" prefHeight="31.0" prefWidth="26.0" style="-fx-background-radius: 5em;" textFill="RED" />
             <Label fx:id="music_now" layoutX="8.0" layoutY="195.0" text="00:00" textFill="RED" />
-            <Label fx:id="music_time" layoutX="416.0" layoutY="195.0" text="03:51" textFill="RED" />
+            <Label fx:id="music_time" layoutX="416.0" layoutY="195.0" text="00:00" textFill="RED" />
          </children></AnchorPane>
       <AnchorPane fx:id="pane_playlistMenu" layoutX="469.0" onMouseClicked="#handleButtonAction" prefHeight="479.0" prefWidth="324.0" style="-fx-background-radius: 0.5em; -fx-background-color: #0C1028;">
          <children>
@@ -54,17 +54,17 @@
                   <JFXButton fx:id="btn_exit_playlist" layoutX="288.0" layoutY="12.0" onMouseClicked="#handleButtonAction" prefHeight="31.0" prefWidth="26.0" style="-fx-background-radius: 5em;" textFill="#363636" />
                </children>
             </Pane>
-            <JFXButton fx:id="removeButton" layoutX="77.0" layoutY="60.0" text="Remove" textFill="RED" />
-            <JFXButton fx:id="importButton" layoutX="162.0" layoutY="60.0" text="Import" textFill="RED" />
-            <JFXButton fx:id="exportButton" layoutX="239.0" layoutY="60.0" text="Export" textFill="RED" />
-            <JFXButton fx:id="addButton" layoutX="19.0" layoutY="60.0" text="Add" textFill="RED" />
+            <JFXButton fx:id="removeButton" layoutX="77.0" layoutY="60.0" onMouseClicked="#handleButtonAction" text="Remove" textFill="RED" />
+            <JFXButton fx:id="importButton" layoutX="162.0" layoutY="60.0" onMouseClicked="#handleButtonAction" text="Import" textFill="RED" />
+            <JFXButton fx:id="exportButton" layoutX="239.0" layoutY="60.0" onMouseClicked="#handleButtonAction" text="Export" textFill="RED" />
+            <JFXButton fx:id="addButton" layoutX="19.0" layoutY="60.0" onMouseClicked="#handleButtonAction" text="Add" textFill="RED" />
             <Label layoutX="11.0" layoutY="410.0" text="Now Playing: " textFill="RED">
                <font>
                   <Font name="Arial Bold" size="15.0" />
                </font>
             </Label>
-            <JFXListView layoutX="10.0" layoutY="97.0" prefHeight="304.0" prefWidth="305.0" />
-            <Label fx:id="nowPlaying" layoutX="12.0" layoutY="437.0" prefHeight="21.0" prefWidth="305.0" text="music played - by an artist" textFill="RED" />
+            <JFXListView fx:id="list_view" layoutX="10.0" layoutY="97.0" onMouseClicked="#handleButtonAction" prefHeight="304.0" prefWidth="305.0" styleClass="mylistview" />
+            <Label fx:id="nowPlaying" layoutX="12.0" layoutY="437.0" prefHeight="21.0" prefWidth="305.0" textFill="RED" />
          </children>
       </AnchorPane>
    </children>
