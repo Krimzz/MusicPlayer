@@ -124,7 +124,7 @@ public class MainController {
 			}
 		}
 
-		if (event.getSource() == nextButton) {
+		if (event.getSource() == nextButton) {//DONEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
 			int index = list_view.getItems().indexOf(list_view.getSelectionModel().getSelectedItem());
 			if (index + 1 >= playlist.size()) {
 				index = -1;
@@ -152,7 +152,7 @@ public class MainController {
 
 		}
 
-		if (event.getSource() == prevButton) {
+		if (event.getSource() == prevButton) {  //DONEEEEEEEEEEEEEEEEEEEEEEEEE
 			int index = list_view.getItems().indexOf(list_view.getSelectionModel().getSelectedItem());
 			if (index - 1  < 0) {
 				index = list_view.getItems().size();
