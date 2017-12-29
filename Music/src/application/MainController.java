@@ -124,7 +124,7 @@ public class MainController {
 			}
 		}
 
-		if (event.getSource() == nextButton) {//DONEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+		if (event.getSource() == nextButton) {// DONEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
 			int index = list_view.getItems().indexOf(list_view.getSelectionModel().getSelectedItem());
 			if (index + 1 >= playlist.size()) {
 				index = -1;
@@ -152,9 +152,9 @@ public class MainController {
 
 		}
 
-		if (event.getSource() == prevButton) {  //DONEEEEEEEEEEEEEEEEEEEEEEEEE
+		if (event.getSource() == prevButton) { // DONEEEEEEEEEEEEEEEEEEEEEEEEE
 			int index = list_view.getItems().indexOf(list_view.getSelectionModel().getSelectedItem());
-			if (index - 1  < 0) {
+			if (index - 1 < 0) {
 				index = list_view.getItems().size();
 			}
 			mediaPlayer.stop();
@@ -191,7 +191,7 @@ public class MainController {
 			}
 		}
 
-		if (event.getSource() == removeButton) { // DONE
+		if (event.getSource() == removeButton && mediaPlayer != null) { // DONE
 			mediaPlayer.stop();
 			mediaPlayer = null;
 			music_time.setText("00:00");
@@ -209,10 +209,10 @@ public class MainController {
 		}
 
 		if (event.getSource() == exportButton) { // ?
-			
+
 		}
 
-		if (event.getSource() == slider) {
+		if (event.getSource() == slider && mediaPlayer != null) {
 			mediaPlayer.seek(duration.multiply(slider.getValue() / 100.0));
 		}
 
@@ -263,8 +263,9 @@ public class MainController {
 	}
 
 	protected void updateValues() {
-		if (music_now != null && slider != null && volumeSlider != null && duration != null) {
+		if (music_now != null && slider != null && volumeSlider != null && duration != null && mediaPlayer != null) {
 			Platform.runLater(new Runnable() {
+				@SuppressWarnings("deprecation")
 				public void run() {
 					currentTime = mediaPlayer.getCurrentTime();
 					music_now.setText(formatTime(currentTime, duration).split("/")[0]);
