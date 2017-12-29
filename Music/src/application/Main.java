@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
@@ -48,7 +49,8 @@ public class Main extends Application {
 			stage.initStyle(StageStyle.TRANSPARENT);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			stage.setOnCloseRequest(e -> Platform.exit());
-			stage.setTitle("Music Player App");
+			Image icon = new Image(getClass().getResourceAsStream("/Pictures/play.png"));
+			stage.getIcons().add(icon);
 			stage.show();
 		} catch (Exception e) {
 			e.printStackTrace();

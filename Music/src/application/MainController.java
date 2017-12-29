@@ -8,6 +8,7 @@ import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXSlider;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -17,6 +18,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaPlayer.Status;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class MainController {
 	FileChooser browser = new FileChooser();
@@ -24,6 +26,10 @@ public class MainController {
 	MediaPlayer mediaPlayer;
 	Media sound;
 	private int currPlay = -1;
+	private Duration duration;
+	private Duration currentTime;
+	String time;
+
 	@FXML
 	private AnchorPane paneMusic;
 
@@ -67,6 +73,9 @@ public class MainController {
 	private JFXSlider slider;
 
 	@FXML
+	private JFXSlider volumeSlider;
+
+	@FXML
 	private Label nowPlaying;
 
 	@FXML
@@ -74,121 +83,231 @@ public class MainController {
 
 	@FXML
 	private Label music_time;
-	
+
 	@FXML
 	private JFXListView<Label> list_view;
-	
+
 	@FXML
 	private FontAwesomeIconView play_icon;
-	
+
+	@FXML
+	private FontAwesomeIconView pause_icon;
+
 	@FXML
 	private void handleButtonAction(MouseEvent event) {
-		if (event.getSource() == btn_exit) {//DONE
+		if (event.getSource() == btn_exit) {// DONE
 			System.exit(0);
 		} else if (event.getSource() == playlistMenu && pane_playlistMenu.isVisible() == false) {
 			pane_playlistMenu.setVisible(true);
 		} else if (event.getSource() == playlistMenu && pane_playlistMenu.isVisible() == true)
 			pane_playlistMenu.setVisible(false);
 
-		if (event.getSource() == btn_exit_playlist) {//DONE
+		if (event.getSource() == btn_exit_playlist) {// DONE
 			pane_playlistMenu.setVisible(false);
 		}
-		
-		if (event.getSource() == btn_minimize) {//DONE
+
+		if (event.getSource() == btn_minimize) {// DONE
 			Stage stage = (Stage) ((JFXButton) event.getSource()).getScene().getWindow();
 			stage.setIconified(true);
 		}
 
-		if (event.getSource() == playButton && mediaPlayer != null) {  //DONEEEE
+		if (event.getSource() == playButton && mediaPlayer != null) { // DONEEEE
 			Status status = mediaPlayer.getStatus();
 			if (status == Status.PAUSED || status == Status.READY || status == Status.STOPPED) {
 				mediaPlayer.play();
-				//playButton.setGraphic();
-			} 
-			else 
-			{
-					mediaPlayer.pause();
+				play_icon.setVisible(false);
+				pause_icon.setVisible(true);
+			} else {
+				play_icon.setVisible(true);
+				pause_icon.setVisible(false);
+				mediaPlayer.pause();
 			}
 		}
 
 		if (event.getSource() == nextButton) {
+			int index = list_view.getItems().indexOf(list_view.getSelectionModel().getSelectedItem());
+			if (index + 1 >= playlist.size()) {
+				index = -1;
+			}
+			mediaPlayer.stop();
+			sound = new Media(playlist.get(index + 1).toURI().toString());
+			mediaPlayer = new MediaPlayer(sound);
+			mediaPlayer.setOnReady(() -> {
+				duration = mediaPlayer.getMedia().getDuration();
+				music_time.setText(formatTime(duration, duration).split("/")[0]);
+			});
+			mediaPlayer.setVolume(volumeSlider.getValue() / 100.0);
+			mediaPlayer.currentTimeProperty().addListener((ov) -> {
+				updateValues();
+			});
+
+			currentTime = mediaPlayer.getCurrentTime();
+
+			mediaPlayer.play();
+			slider.setValue(0);
+			play_icon.setVisible(false);
+			pause_icon.setVisible(true);
+			nowPlaying.setText(playlist.get(index + 1).getName());
+			list_view.getSelectionModel().select(index + 1);
 
 		}
 
 		if (event.getSource() == prevButton) {
+			int index = list_view.getItems().indexOf(list_view.getSelectionModel().getSelectedItem());
+			if (index - 1  < 0) {
+				index = list_view.getItems().size();
+			}
+			mediaPlayer.stop();
+			sound = new Media(playlist.get(index - 1).toURI().toString());
+			mediaPlayer = new MediaPlayer(sound);
+			mediaPlayer.setOnReady(() -> {
+				duration = mediaPlayer.getMedia().getDuration();
+				music_time.setText(formatTime(duration, duration).split("/")[0]);
+			});
+			mediaPlayer.setVolume(volumeSlider.getValue() / 100.0);
+			mediaPlayer.currentTimeProperty().addListener((ov) -> {
+				updateValues();
+			});
 
+			currentTime = mediaPlayer.getCurrentTime();
+
+			mediaPlayer.play();
+			slider.setValue(0);
+			play_icon.setVisible(false);
+			pause_icon.setVisible(true);
+			nowPlaying.setText(playlist.get(index - 1).getName());
+			list_view.getSelectionModel().select(index - 1);
 		}
 
-		if (event.getSource() == addButton) {   //DONE
+		if (event.getSource() == addButton) { // DONE
 			configureFileChooser(browser);
 			Stage stage = (Stage) ((JFXButton) event.getSource()).getScene().getWindow();
 			File file = browser.showOpenDialog(stage);
-			if (file != null && !playlist.stream().anyMatch((a) -> {return file.getName().equals(a.getName());})) {
+			if (file != null && !playlist.stream().anyMatch((a) -> {
+				return file.getName().equals(a.getName());
+			})) {
 				playlist.add(file);
 				list_view.getItems().add(new Label(file.getName()));
-			}	
+			}
 		}
 
-		if (event.getSource() == removeButton) {   //DONE
-			playlist.remove(list_view.getItems().indexOf(list_view.getSelectionModel().getSelectedItem()));
-			list_view.getItems().remove(list_view.getSelectionModel().getSelectedItem());
+		if (event.getSource() == removeButton) { // DONE
 			mediaPlayer.stop();
 			mediaPlayer = null;
+			music_time.setText("00:00");
+			music_now.setText("00:00");
+			slider.setValue(0);
+			play_icon.setVisible(true);
+			pause_icon.setVisible(false);
 			nowPlaying.setText(" ");
+			playlist.remove(list_view.getItems().indexOf(list_view.getSelectionModel().getSelectedItem()));
+			list_view.getItems().remove(list_view.getSelectionModel().getSelectedItem());
 		}
 
-		if (event.getSource() == importButton) {
+		if (event.getSource() == importButton) { // ?
 
 		}
 
-		if (event.getSource() == exportButton) {
-
+		if (event.getSource() == exportButton) { // ?
+			
 		}
 
 		if (event.getSource() == slider) {
-			//music_now.setText(mediaPlayer.getCurrentTime().toString());
+			mediaPlayer.seek(duration.multiply(slider.getValue() / 100.0));
 		}
-		
-		if (event.getSource() == list_view) { //DONEEEEEE
+
+		if (event.getSource() == volumeSlider) {
+			mediaPlayer.setVolume(volumeSlider.getValue() / 100.0);
+		}
+
+		if (event.getSource() == list_view) { // DONEEEEEE
 			int selPlay = list_view.getItems().indexOf(list_view.getSelectionModel().getSelectedItem());
-			if(currPlay == selPlay) {
-				sound = new Media(playlist.get(list_view.getItems().indexOf(list_view.getSelectionModel().getSelectedItem())).toURI().toString());
-				if(mediaPlayer != null)
+			if (currPlay == selPlay) {
+				sound = new Media(
+						playlist.get(list_view.getItems().indexOf(list_view.getSelectionModel().getSelectedItem()))
+								.toURI().toString());
+				if (mediaPlayer != null) {
 					mediaPlayer.stop();
+				}
+
 				mediaPlayer = new MediaPlayer(sound);
+				mediaPlayer.setOnReady(() -> {
+					duration = mediaPlayer.getMedia().getDuration();
+					music_time.setText(formatTime(duration, duration).split("/")[0]);
+				});
+				mediaPlayer.setVolume(volumeSlider.getValue() / 100.0);
+				mediaPlayer.currentTimeProperty().addListener((ov) -> {
+					updateValues();
+				});
+
+				currentTime = mediaPlayer.getCurrentTime();
+
 				mediaPlayer.play();
-				nowPlaying.setText(playlist.get(list_view.getItems().indexOf(list_view.getSelectionModel().getSelectedItem())).getName());
-				//music_now.setText(mediaPlayer.getCurrentTime());
-			}
-			
-			else
-			{
+				slider.setValue(0);
+				play_icon.setVisible(false);
+				pause_icon.setVisible(true);
+				nowPlaying.setText(playlist
+						.get(list_view.getItems().indexOf(list_view.getSelectionModel().getSelectedItem())).getName());
+
+			} else {
 				currPlay = selPlay;
 			}
 		}
-		/*slider.valueProperty().addListener(new InvalidationListener() {
-		    public void invalidated(Observable ov) {
-		        if (slider.isValueChanging()) {
-		            // multiply duration by percentage calculated by slider position
-		            if(duration!=null) {
-		                mp.seek(duration.multiply(timeSlider.getValue() / 100.0));
-		            }
-		            updateValues();
-		       }
-		    }*/
-
 	}
 
 	private static void configureFileChooser(final FileChooser fileChooser) {
 		fileChooser.setTitle("Add Music");
 		fileChooser.setInitialDirectory(new File(System.getProperty("user.home") + "\\Music\\"));
-		fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("MP3", "*.mp3"),new FileChooser.ExtensionFilter("WAV", "*.wav"));
+		fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("MP3", "*.mp3"),
+				new FileChooser.ExtensionFilter("WAV", "*.wav"));
 	}
-	
-	
-	// change lable name when music changes
-	/*
-	 * private void chageMusic() { nowPlaying.setText((new Date()).toString()); }
-	 */
+
+	protected void updateValues() {
+		if (music_now != null && slider != null && volumeSlider != null && duration != null) {
+			Platform.runLater(new Runnable() {
+				public void run() {
+					currentTime = mediaPlayer.getCurrentTime();
+					music_now.setText(formatTime(currentTime, duration).split("/")[0]);
+					slider.setDisable(duration.isUnknown());
+					if (!slider.isDisabled() && duration.greaterThan(Duration.ZERO) && !slider.isValueChanging()) {
+						slider.setValue(currentTime.divide(duration).toMillis() * 100.0);
+					}
+				}
+			});
+		}
+	}
+
+	private static String formatTime(Duration elapsed, Duration duration) {
+		int intElapsed = (int) Math.floor(elapsed.toSeconds());
+		int elapsedHours = intElapsed / (60 * 60);
+		if (elapsedHours > 0) {
+			intElapsed -= elapsedHours * 60 * 60;
+		}
+		int elapsedMinutes = intElapsed / 60;
+		int elapsedSeconds = intElapsed - elapsedHours * 60 * 60 - elapsedMinutes * 60;
+
+		if (duration.greaterThan(Duration.ZERO)) {
+			int intDuration = (int) Math.floor(duration.toSeconds());
+			int durationHours = intDuration / (60 * 60);
+			if (durationHours > 0) {
+				intDuration -= durationHours * 60 * 60;
+			}
+			int durationMinutes = intDuration / 60;
+			int durationSeconds = intDuration - durationHours * 60 * 60 - durationMinutes * 60;
+			if (durationHours > 0) {
+				return String.format("%d:%02d:%02d/%d:%02d:%02d", elapsedHours, elapsedMinutes, elapsedSeconds,
+						durationHours, durationMinutes, durationSeconds);
+			} else {
+				return String.format("%02d:%02d/%02d:%02d", elapsedMinutes, elapsedSeconds, durationMinutes,
+						durationSeconds);
+			}
+		} else {
+			if (elapsedHours > 0) {
+				return String.format("%d:%02d:%02d", elapsedHours, elapsedMinutes, elapsedSeconds);
+			} else {
+				return String.format("%02d:%02d", elapsedMinutes, elapsedSeconds);
+			}
+		}
+	}
 
 }
