@@ -16,58 +16,59 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane fx:id="paneMusic" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="533.0" prefWidth="794.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
-   <children>
-      <AnchorPane id="musicPlayer" prefHeight="258.0" prefWidth="456.0">
-         <children>
-            <ImageView fitHeight="288.0" fitWidth="456.0">
-               <image>
-                  <Image url="@../Pictures/background.jpg" />
-               </image>
-            </ImageView>
-            <FontAwesomeIconView fx:id="play_icon" fill="RED" glyphName="PLAY" layoutX="222.0" layoutY="248.0" onMouseClicked="#handleButtonAction" size="25" />
-            <FontAwesomeIconView fill="RED" glyphName="CHEVRON_RIGHT" layoutX="304.0" layoutY="246.0" size="15" />
-            <FontAwesomeIconView fill="RED" glyphName="CHEVRON_LEFT" layoutX="143.0" layoutY="247.0" size="15" text="" />
-            <FontAwesomeIconView fill="RED" glyphName="BARS" layoutX="370.0" layoutY="25.0" size="20" />
-            <JFXSlider fx:id="slider" focusTraversable="false" layoutX="59.0" layoutY="197.0" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#handleButtonAction" prefHeight="18.0" prefWidth="339.0" stylesheets="@application.css" value="1.0" />
-            <FontAwesomeIconView fill="RED" glyphName="TIMES" layoutX="426.0" layoutY="24.0" size="20" />
-            <FontAwesomeIconView fx:id="pause_icon" fill="RED" glyphName="PAUSE" layoutX="219.0" layoutY="248.0" onMouseClicked="#handleButtonAction" size="25" visible="false" />
-            <JFXButton fx:id="btn_exit" layoutX="421.0" layoutY="3.0" onMouseClicked="#handleButtonAction" prefHeight="31.0" prefWidth="26.0" style="-fx-background-radius: 5em;" textFill="RED" />
-            <JFXButton fx:id="playButton" layoutX="214.0" layoutY="224.0" onMouseClicked="#handleButtonAction" prefHeight="31.0" prefWidth="32.0" style="-fx-background-radius: 5em;" textFill="RED" />
-            <JFXButton fx:id="playlistMenu" layoutX="366.0" layoutY="3.0" onMouseClicked="#handleButtonAction" prefHeight="31.0" prefWidth="26.0" style="-fx-background-radius: 5em;" textFill="RED" />
-            <JFXButton fx:id="prevButton" layoutX="139.0" layoutY="226.0" onMouseClicked="#handleButtonAction" prefHeight="0.0" prefWidth="0.0" style="-fx-background-radius: 5em;" textFill="RED" />
-            <JFXButton fx:id="nextButton" layoutX="299.0" layoutY="225.0" onMouseClicked="#handleButtonAction" prefHeight="0.0" prefWidth="0.0" style="-fx-background-radius: 5em;" textFill="RED" />
-            <FontAwesomeIconView fill="RED" glyphName="MINUS" layoutX="400.0" layoutY="25.0" size="20" />
-            <JFXButton fx:id="btn_minimize" layoutX="395.0" layoutY="2.0" onMouseClicked="#handleButtonAction" prefHeight="31.0" prefWidth="26.0" style="-fx-background-radius: 5em;" textFill="RED" />
-            <Label fx:id="music_now" layoutX="14.0" layoutY="196.0" onMouseClicked="#handleButtonAction" text="00:00" textFill="RED" />
-            <Label fx:id="music_time" layoutX="403.0" layoutY="196.0" onMouseClicked="#handleButtonAction" text="00:00" textFill="RED" />
-            <JFXSlider fx:id="volumeSlider" layoutX="350.0" layoutY="230.0" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#handleButtonAction" prefHeight="18.0" prefWidth="83.0" value="25.0" />
-         </children></AnchorPane>
-      <AnchorPane fx:id="pane_playlistMenu" layoutX="469.0" onMouseClicked="#handleButtonAction" prefHeight="479.0" prefWidth="324.0" style="-fx-background-radius: 0.5em; -fx-background-color: #0C1028;">
-         <children>
-            <Pane prefHeight="71.0" prefWidth="324.0" />
-            <Pane prefHeight="56.0" prefWidth="324.0" style="-fx-background-color: #ff0000; -fx-background-radius: 0.5em;">
-               <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="26.0" layoutY="18.0" text="Playlist" textFill="#0c1028">
-                     <font>
-                        <Font name="Arial Bold" size="18.0" />
-                     </font>
-                  </Label>
-                  <FontAwesomeIconView fill="#0c1028" glyphName="TIMES" layoutX="294.0" layoutY="34.0" size="20" />
-                  <JFXButton fx:id="btn_exit_playlist" layoutX="288.0" layoutY="12.0" onMouseClicked="#handleButtonAction" prefHeight="31.0" prefWidth="26.0" style="-fx-background-radius: 5em;" textFill="#363636" />
-               </children>
-            </Pane>
-            <JFXButton fx:id="removeButton" layoutX="77.0" layoutY="60.0" onMouseClicked="#handleButtonAction" text="Remove" textFill="RED" />
-            <JFXButton fx:id="importButton" layoutX="162.0" layoutY="60.0" onMouseClicked="#handleButtonAction" text="Import" textFill="RED" />
-            <JFXButton fx:id="exportButton" layoutX="239.0" layoutY="60.0" onMouseClicked="#handleButtonAction" text="Export" textFill="RED" />
-            <JFXButton fx:id="addButton" layoutX="19.0" layoutY="60.0" onMouseClicked="#handleButtonAction" text="Add" textFill="RED" />
-            <Label layoutX="11.0" layoutY="410.0" text="Now Playing: " textFill="RED">
-               <font>
-                  <Font name="Arial Bold" size="15.0" />
-               </font>
-            </Label>
-            <JFXListView fx:id="list_view" layoutX="10.0" layoutY="97.0" onMouseClicked="#handleButtonAction" prefHeight="304.0" prefWidth="305.0" styleClass="mylistview" />
-            <Label fx:id="nowPlaying" layoutX="12.0" layoutY="437.0" prefHeight="21.0" prefWidth="305.0" textFill="RED" />
-         </children>
-      </AnchorPane>
-   </children>
+	<children>
+		<AnchorPane id="musicPlayer" prefHeight="258.0" prefWidth="456.0">
+			<children>
+				<ImageView fitHeight="288.0" fitWidth="456.0">
+					<image>
+						<Image url="@../Pictures/background.jpg" />
+					</image>
+				</ImageView>
+				<FontAwesomeIconView fx:id="play_icon" fill="RED" glyphName="PLAY" layoutX="222.0" layoutY="248.0" onMouseClicked="#handleButtonAction" size="25" />
+				<FontAwesomeIconView fill="RED" glyphName="CHEVRON_RIGHT" layoutX="304.0" layoutY="246.0" size="15" />
+				<FontAwesomeIconView fill="RED" glyphName="CHEVRON_LEFT" layoutX="143.0" layoutY="247.0" size="15" text="" />
+				<FontAwesomeIconView fill="RED" glyphName="BARS" layoutX="370.0" layoutY="25.0" size="20" />
+				<JFXSlider id="musicSlider" fx:id="slider" focusTraversable="false" layoutX="59.0" layoutY="197.0" nodeOrientation="LEFT_TO_RIGHT" onDragDetected="#handleButtonAction" onDragDone="#handleButtonAction" onDragDropped="#handleButtonAction" onDragEntered="#handleButtonAction" onDragExited="#handleButtonAction" onDragOver="#handleButtonAction" onMouseClicked="#handleButtonAction" onMouseDragOver="#handleButtonAction" onMouseDragReleased="#handleButtonAction" onMouseDragged="#handleButtonAction" onMousePressed="#handleButtonAction" prefHeight="18.0" prefWidth="339.0" stylesheets="@slider.css" value="1.0" />
+				<FontAwesomeIconView fill="RED" glyphName="TIMES" layoutX="426.0" layoutY="24.0" size="20" />
+				<FontAwesomeIconView fx:id="pause_icon" fill="RED" glyphName="PAUSE" layoutX="219.0" layoutY="248.0" onMouseClicked="#handleButtonAction" size="25" visible="false" />
+				<JFXButton fx:id="btn_exit" layoutX="421.0" layoutY="3.0" onMouseClicked="#handleButtonAction" prefHeight="31.0" prefWidth="26.0" style="-fx-background-radius: 5em;" textFill="RED" />
+				<JFXButton fx:id="playButton" layoutX="214.0" layoutY="224.0" onMouseClicked="#handleButtonAction" prefHeight="31.0" prefWidth="32.0" style="-fx-background-radius: 5em;" textFill="RED" />
+				<JFXButton fx:id="playlistMenu" layoutX="366.0" layoutY="3.0" onMouseClicked="#handleButtonAction" prefHeight="31.0" prefWidth="26.0" style="-fx-background-radius: 5em;" textFill="RED" />
+				<JFXButton fx:id="prevButton" layoutX="139.0" layoutY="226.0" onMouseClicked="#handleButtonAction" prefHeight="0.0" prefWidth="0.0" style="-fx-background-radius: 5em;" textFill="RED" />
+				<JFXButton fx:id="nextButton" layoutX="299.0" layoutY="225.0" onMouseClicked="#handleButtonAction" prefHeight="0.0" prefWidth="0.0" style="-fx-background-radius: 5em;" textFill="RED" />
+				<FontAwesomeIconView fill="RED" glyphName="MINUS" layoutX="400.0" layoutY="25.0" size="20" />
+				<JFXButton fx:id="btn_minimize" layoutX="395.0" layoutY="2.0" onMouseClicked="#handleButtonAction" prefHeight="31.0" prefWidth="26.0" style="-fx-background-radius: 5em;" textFill="RED" />
+				<Label fx:id="music_now" layoutX="14.0" layoutY="196.0" onMouseClicked="#handleButtonAction" text="00:00" textFill="RED" />
+				<Label fx:id="music_time" layoutX="403.0" layoutY="196.0" onMouseClicked="#handleButtonAction" text="00:00" textFill="RED" />
+				<JFXSlider id="volumeSlider" fx:id="volumeSlider" layoutX="350.0" layoutY="230.0" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#handleButtonAction" onMouseDragEntered="#handleButtonAction" onMouseDragExited="#handleButtonAction" onMouseDragged="#handleButtonAction" prefHeight="18.0" prefWidth="83.0" stylesheets="@application.css" value="25.0" />
+			</children>
+		</AnchorPane>
+		<AnchorPane fx:id="pane_playlistMenu" layoutX="469.0" onMouseClicked="#handleButtonAction" prefHeight="479.0" prefWidth="324.0" style="-fx-background-radius: 0.5em; -fx-background-color: #0C1028;">
+			<children>
+				<Pane prefHeight="71.0" prefWidth="324.0" />
+				<Pane prefHeight="56.0" prefWidth="324.0" style="-fx-background-color: #ff0000; -fx-background-radius: 0.5em;">
+					<children>
+						<Label alignment="CENTER" contentDisplay="CENTER" layoutX="26.0" layoutY="18.0" text="Playlist" textFill="#0c1028">
+							<font>
+								<Font name="Arial Bold" size="18.0" />
+							</font>
+						</Label>
+						<FontAwesomeIconView fill="#0c1028" glyphName="TIMES" layoutX="294.0" layoutY="34.0" size="20" />
+						<JFXButton fx:id="btn_exit_playlist" layoutX="288.0" layoutY="12.0" onMouseClicked="#handleButtonAction" prefHeight="31.0" prefWidth="26.0" style="-fx-background-radius: 5em;" textFill="#363636" />
+					</children>
+				</Pane>
+				<JFXButton fx:id="removeButton" layoutX="77.0" layoutY="60.0" onMouseClicked="#handleButtonAction" text="Remove" textFill="RED" />
+				<JFXButton fx:id="importButton" layoutX="162.0" layoutY="60.0" onMouseClicked="#handleButtonAction" text="Import" textFill="RED" />
+				<JFXButton fx:id="exportButton" layoutX="239.0" layoutY="60.0" onMouseClicked="#handleButtonAction" text="Export" textFill="RED" />
+				<JFXButton fx:id="addButton" layoutX="19.0" layoutY="60.0" onMouseClicked="#handleButtonAction" text="Add" textFill="RED" />
+				<Label layoutX="11.0" layoutY="410.0" text="Now Playing: " textFill="RED">
+					<font>
+						<Font name="Arial Bold" size="15.0" />
+					</font>
+				</Label>
+				<JFXListView fx:id="list_view" layoutX="10.0" layoutY="97.0" onMouseClicked="#handleButtonAction" prefHeight="304.0" prefWidth="305.0" styleClass="mylistview" />
+				<Label fx:id="nowPlaying" layoutX="12.0" layoutY="437.0" prefHeight="21.0" prefWidth="305.0" textFill="RED" />
+			</children>
+		</AnchorPane>
+	</children>
 </AnchorPane>

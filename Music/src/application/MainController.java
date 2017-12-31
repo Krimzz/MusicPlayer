@@ -1,6 +1,10 @@
 package application;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 
 import com.jfoenix.controls.JFXButton;
@@ -11,6 +15,7 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
@@ -29,6 +34,7 @@ public class MainController {
 	private Duration duration;
 	private Duration currentTime;
 	String time;
+	ListCell<Label> cell;
 
 	@FXML
 	private AnchorPane paneMusic;
@@ -124,7 +130,7 @@ public class MainController {
 			}
 		}
 
-		if (event.getSource() == nextButton) {// DONEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+		if (event.getSource() == nextButton && playlist.size() != 0) {// DONEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
 			int index = list_view.getItems().indexOf(list_view.getSelectionModel().getSelectedItem());
 			if (index + 1 >= playlist.size()) {
 				index = -1;
@@ -152,7 +158,7 @@ public class MainController {
 
 		}
 
-		if (event.getSource() == prevButton) { // DONEEEEEEEEEEEEEEEEEEEEEEEEE
+		if (event.getSource() == prevButton && playlist.size() != 0) { // DONEEEEEEEEEEEEEEEEEEEEEEEEE
 			int index = list_view.getItems().indexOf(list_view.getSelectionModel().getSelectedItem());
 			if (index - 1 < 0) {
 				index = list_view.getItems().size();
@@ -209,48 +215,64 @@ public class MainController {
 		}
 
 		if (event.getSource() == exportButton) { // ?
-
+			Stage stage = (Stage) ((JFXButton) event.getSource()).getScene().getWindow();
+			FileChooser fileChooser = new FileChooser();
+			FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+            fileChooser.getExtensionFilters().add(extFilter);
+            fileChooser.setTitle("Choose Save Directory");
+    		fileChooser.setInitialDirectory(new File(System.getProperty("user.home") + "\\Music\\"));
+            File file = fileChooser.showSaveDialog(stage);
+            if(file != null){
+                try {
+					FileWriter fw = new FileWriter("Playlist0");
+					Writer output = new BufferedWriter(fw);
+					for(int i = 0; i < playlist.size(); i++) {
+						output.write(playlist.get(i).toPath()+ "\n");
+						System.out.println(playlist.get(i));
+					}
+					output.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+            }
 		}
 
 		if (event.getSource() == slider && mediaPlayer != null) {
 			mediaPlayer.seek(duration.multiply(slider.getValue() / 100.0));
 		}
 
-		if (event.getSource() == volumeSlider) {
+		if (event.getSource() == volumeSlider && mediaPlayer != null) {
 			mediaPlayer.setVolume(volumeSlider.getValue() / 100.0);
 		}
 
-		if (event.getSource() == list_view) { // DONEEEEEE
+		if (event.getSource() == list_view && playlist.size() != 0) { // DONEEEEEE
 			int selPlay = list_view.getItems().indexOf(list_view.getSelectionModel().getSelectedItem());
-			if (currPlay == selPlay) {
-				sound = new Media(
-						playlist.get(list_view.getItems().indexOf(list_view.getSelectionModel().getSelectedItem()))
-								.toURI().toString());
+			if (currPlay == selPlay && list_view.getSelectionModel().getSelectedItem() != null) {
+				sound = new Media(playlist.get(selPlay).toURI().toString());
 				if (mediaPlayer != null) {
 					mediaPlayer.stop();
 				}
-
 				mediaPlayer = new MediaPlayer(sound);
+				
 				mediaPlayer.setOnReady(() -> {
 					duration = mediaPlayer.getMedia().getDuration();
 					music_time.setText(formatTime(duration, duration).split("/")[0]);
 				});
+				
 				mediaPlayer.setVolume(volumeSlider.getValue() / 100.0);
 				mediaPlayer.currentTimeProperty().addListener((ov) -> {
 					updateValues();
 				});
 
-				currentTime = mediaPlayer.getCurrentTime();
-
 				mediaPlayer.play();
+				currPlay = -1;
 				slider.setValue(0);
 				play_icon.setVisible(false);
 				pause_icon.setVisible(true);
-				nowPlaying.setText(playlist
-						.get(list_view.getItems().indexOf(list_view.getSelectionModel().getSelectedItem())).getName());
-
+				nowPlaying.setText(playlist.get(selPlay).getName());
 			} else {
-				currPlay = selPlay;
+					currPlay = selPlay;
 			}
 		}
 	}
@@ -259,7 +281,8 @@ public class MainController {
 		fileChooser.setTitle("Add Music");
 		fileChooser.setInitialDirectory(new File(System.getProperty("user.home") + "\\Music\\"));
 		fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("MP3", "*.mp3"),
-				new FileChooser.ExtensionFilter("WAV", "*.wav"));
+				new FileChooser.ExtensionFilter("WAV", "*.wav"), new FileChooser.ExtensionFilter("M4A", "*.m4a"),
+				new FileChooser.ExtensionFilter("AAC", "*.aac"), new FileChooser.ExtensionFilter("MP4", "*.mp4"));
 	}
 
 	protected void updateValues() {
@@ -271,7 +294,7 @@ public class MainController {
 					music_now.setText(formatTime(currentTime, duration).split("/")[0]);
 					slider.setDisable(duration.isUnknown());
 					if (!slider.isDisabled() && duration.greaterThan(Duration.ZERO) && !slider.isValueChanging()) {
-						slider.setValue(currentTime.divide(duration).toMillis() * 100.0);
+						slider.setValue(currentTime.divide(duration).toMillis() * 100.0);	
 					}
 				}
 			});
