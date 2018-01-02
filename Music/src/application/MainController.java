@@ -222,9 +222,11 @@ public class MainController {
 			fileChooser.setInitialDirectory(new File(System.getProperty("user.home") + "\\Music\\"));
 			File file = fileChooser.showOpenDialog(stage);
 			if (file != null) {
+				if(mediaPlayer != null) {
+					mediaPlayer.stop();
+				}
 				playlist.clear();
 				list_view.getItems().clear();
-				mediaPlayer.stop();
 				mediaPlayer = null;
 				music_time.setText("00:00");
 				music_now.setText("00:00");
