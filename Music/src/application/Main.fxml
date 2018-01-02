@@ -28,7 +28,7 @@
 				<FontAwesomeIconView fill="RED" glyphName="CHEVRON_RIGHT" layoutX="304.0" layoutY="246.0" size="15" />
 				<FontAwesomeIconView fill="RED" glyphName="CHEVRON_LEFT" layoutX="143.0" layoutY="247.0" size="15" text="" />
 				<FontAwesomeIconView fill="RED" glyphName="BARS" layoutX="370.0" layoutY="25.0" size="20" />
-				<JFXSlider id="musicSlider" fx:id="slider" focusTraversable="false" layoutX="59.0" layoutY="197.0" nodeOrientation="LEFT_TO_RIGHT" onDragDetected="#handleButtonAction" onDragDone="#handleButtonAction" onDragDropped="#handleButtonAction" onDragEntered="#handleButtonAction" onDragExited="#handleButtonAction" onDragOver="#handleButtonAction" onMouseClicked="#handleButtonAction" onMouseDragOver="#handleButtonAction" onMouseDragReleased="#handleButtonAction" onMouseDragged="#handleButtonAction" onMousePressed="#handleButtonAction" prefHeight="18.0" prefWidth="339.0" stylesheets="@slider.css" value="1.0" />
+				<JFXSlider id="musicSlider" fx:id="slider" layoutX="59.0" layoutY="197.0" nodeOrientation="LEFT_TO_RIGHT" onMouseDragEntered="#handleButtonAction" onMouseDragExited="#handleButtonAction" onMousePressed="#handleButtonAction" pickOnBounds="false" prefHeight="18.0" prefWidth="339.0" stylesheets="@slider.css" value="1.0" />
 				<FontAwesomeIconView fill="RED" glyphName="TIMES" layoutX="426.0" layoutY="24.0" size="20" />
 				<FontAwesomeIconView fx:id="pause_icon" fill="RED" glyphName="PAUSE" layoutX="219.0" layoutY="248.0" onMouseClicked="#handleButtonAction" size="25" visible="false" />
 				<JFXButton fx:id="btn_exit" layoutX="421.0" layoutY="3.0" onMouseClicked="#handleButtonAction" prefHeight="31.0" prefWidth="26.0" style="-fx-background-radius: 5em;" textFill="RED" />
