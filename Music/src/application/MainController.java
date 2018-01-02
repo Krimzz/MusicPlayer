@@ -87,6 +87,9 @@ public class MainController {
 
 	@FXML
 	private Label music_time;
+	
+	@FXML
+	private Label playlistLabel;
 
 	@FXML
 	private JFXListView<Label> list_view;
@@ -234,8 +237,10 @@ public class MainController {
 				play_icon.setVisible(true);
 				pause_icon.setVisible(false);
 				nowPlaying.setText(" ");
+				playlistLabel.setText(file.getName().toString().split(".txt")[0]);
 				File f;
 				Scanner sc;
+				
 				try {
 					sc = new Scanner(file);
 					while (sc.hasNextLine()) {

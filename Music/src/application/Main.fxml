@@ -48,13 +48,18 @@
 				<Pane prefHeight="71.0" prefWidth="324.0" />
 				<Pane prefHeight="56.0" prefWidth="324.0" style="-fx-background-color: #ff0000; -fx-background-radius: 0.5em;">
 					<children>
-						<Label alignment="CENTER" contentDisplay="CENTER" layoutX="26.0" layoutY="18.0" text="Playlist" textFill="#0c1028">
+						<Label alignment="CENTER" contentDisplay="CENTER" layoutX="26.0" layoutY="18.0" text="Playlist:" textFill="#0c1028">
 							<font>
 								<Font name="Arial Bold" size="18.0" />
 							</font>
 						</Label>
 						<FontAwesomeIconView fill="#0c1028" glyphName="TIMES" layoutX="294.0" layoutY="34.0" size="20" />
 						<JFXButton fx:id="btn_exit_playlist" layoutX="288.0" layoutY="12.0" onMouseClicked="#handleButtonAction" prefHeight="31.0" prefWidth="26.0" style="-fx-background-radius: 5em;" textFill="#363636" />
+                  <Label fx:id="playlistLabel" layoutX="101.0" layoutY="18.0" onMouseClicked="#handleButtonAction" prefHeight="21.0" prefWidth="181.0" text="My Playlist" textFill="#0c1028">
+                     <font>
+                        <Font name="Arial Bold" size="18.0" />
+                     </font>
+                  </Label>
 					</children>
 				</Pane>
 				<JFXButton fx:id="removeButton" layoutX="77.0" layoutY="60.0" onMouseClicked="#handleButtonAction" text="Remove" textFill="RED" />
