@@ -87,7 +87,7 @@ public class MainController {
 
 	@FXML
 	private Label music_time;
-	
+
 	@FXML
 	private Label playlistLabel;
 
@@ -225,7 +225,7 @@ public class MainController {
 			fileChooser.setInitialDirectory(new File(System.getProperty("user.home") + "\\Music\\"));
 			File file = fileChooser.showOpenDialog(stage);
 			if (file != null) {
-				if(mediaPlayer != null) {
+				if (mediaPlayer != null) {
 					mediaPlayer.stop();
 				}
 				playlist.clear();
@@ -240,7 +240,7 @@ public class MainController {
 				playlistLabel.setText(file.getName().toString().split(".txt")[0]);
 				File f;
 				Scanner sc;
-				
+
 				try {
 					sc = new Scanner(file);
 					while (sc.hasNextLine()) {
