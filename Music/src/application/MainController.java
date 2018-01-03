@@ -186,7 +186,7 @@ public class MainController {
 			list_view.getSelectionModel().select(index - 1);
 		}
 
-		if (event.getSource() == addButton) { // DONE
+		if (event.getSource() == addButton) { // DONEEEEEEEEEEEEE
 			configureFileChooser(browser);
 			Stage stage = (Stage) ((JFXButton) event.getSource()).getScene().getWindow();
 			File file = browser.showOpenDialog(stage);
@@ -198,7 +198,7 @@ public class MainController {
 			}
 		}
 
-		if (event.getSource() == removeButton) { // DONE
+		if (event.getSource() == removeButton) { // DONEEEEEEEEEEEEE
 			if (mediaPlayer != null && mediaPlayer.getMedia().getSource()
 					.equals(playlist.get(list_view.getItems().indexOf(list_view.getSelectionModel().getSelectedItem()))
 							.toURI().toString())) {
@@ -215,7 +215,7 @@ public class MainController {
 			list_view.getItems().remove(list_view.getSelectionModel().getSelectedItem());
 		}
 
-		if (event.getSource() == importButton) { // ?
+		if (event.getSource() == importButton) { // DONEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
 			configureFileChooser(browser);
 			Stage stage = (Stage) ((JFXButton) event.getSource()).getScene().getWindow();
 			FileChooser fileChooser = new FileChooser();
@@ -255,7 +255,7 @@ public class MainController {
 			}
 		}
 
-		if (event.getSource() == exportButton && playlist.size() > 0) { // ?
+		if (event.getSource() == exportButton && playlist.size() > 0) { // DONEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
 			Stage stage = (Stage) ((JFXButton) event.getSource()).getScene().getWindow();
 			FileChooser fileChooser = new FileChooser();
 			FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
@@ -280,10 +280,10 @@ public class MainController {
 		}
 
 		if (event.getSource() == slider && mediaPlayer != null) {
-			mediaPlayer.seek(duration.multiply(slider.getValue() / 100)); // Here it is!!!
+			mediaPlayer.seek(duration.multiply(slider.getValue() / 100)); // Here it is (bug on seek because of bitrate)!!!
 		}
 
-		if (event.getSource() == volumeSlider && mediaPlayer != null) {
+		if (event.getSource() == volumeSlider && mediaPlayer != null) {   //that was easy
 			mediaPlayer.setVolume(volumeSlider.getValue() / 100.0);
 		}
 
@@ -323,7 +323,7 @@ public class MainController {
 
 	}
 
-	private void setEnd() {
+	private void setEnd() {            //set next song when current song is finished
 		mediaPlayer.setOnEndOfMedia(() -> {
 			if (playlist.size() > 1) {
 				int index = getCurrentIndex();
@@ -364,7 +364,7 @@ public class MainController {
 				new FileChooser.ExtensionFilter("AAC", "*.aac"), new FileChooser.ExtensionFilter("MP4", "*.mp4"));
 	}
 
-	protected void updateValues() {
+	protected void updateValues() {    //constant update of values for time slider when a song plays
 		if (music_now != null && slider != null && volumeSlider != null && duration != null && mediaPlayer != null) {
 			Platform.runLater(new Runnable() {
 				@SuppressWarnings("deprecation")
@@ -374,7 +374,6 @@ public class MainController {
 					slider.setDisable(duration.isUnknown());
 					if (!slider.isDisabled() && duration.greaterThan(Duration.ZERO) && !slider.isValueChanging()) {
 						slider.setValue(currentTime.divide(duration).toMillis() * 100);
-						// slider.setValue(currentTime.toMillis() / duration.toMillis());
 					}
 
 				}
@@ -383,7 +382,7 @@ public class MainController {
 
 	}
 
-	private int getCurrentIndex() {
+	private int getCurrentIndex() {    //current index of the song that is playing
 		for (int i = 0; i < playlist.size(); i++) {
 			if (mediaPlayer.getMedia().getSource().equals(playlist.get(i).toURI().toString())) {
 				return i;
@@ -392,7 +391,7 @@ public class MainController {
 		return -1;
 	}
 
-	private static String formatTime(Duration elapsed, Duration duration) {
+	private static String formatTime(Duration elapsed, Duration duration) {  //format time for labels
 		int intElapsed = (int) Math.floor(elapsed.toSeconds());
 		int elapsedHours = intElapsed / (60 * 60);
 		if (elapsedHours > 0) {
