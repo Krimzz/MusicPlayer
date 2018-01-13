@@ -188,7 +188,7 @@ public class MainController {
 		}
 
 		if (event.getSource() == addButton) { // DONEEEEEEEEEEEEE
-			if(configured == false) {
+			if (configured == false) {
 				configured = true;
 				configureFileChooser(browser);
 			}
@@ -202,7 +202,7 @@ public class MainController {
 			}
 		}
 
-		if (event.getSource() == removeButton) { // DONEEEEEEEEEEEEE
+		if (event.getSource() == removeButton && playlist.size() != 0) { // DONEEEEEEEEEEEEE
 			if (mediaPlayer != null && mediaPlayer.getMedia().getSource()
 					.equals(playlist.get(list_view.getItems().indexOf(list_view.getSelectionModel().getSelectedItem()))
 							.toURI().toString())) {
@@ -243,13 +243,14 @@ public class MainController {
 				playlistLabel.setText(file.getName().toString().split(".txt")[0]);
 				File f;
 				Scanner sc;
-
 				try {
 					sc = new Scanner(file);
 					while (sc.hasNextLine()) {
 						f = new File(sc.nextLine());
-						playlist.add(f);
-						list_view.getItems().add(new Label(f.getName()));
+						if (f.canRead()) {
+							playlist.add(f);
+							list_view.getItems().add(new Label(f.getName()));
+						}
 					}
 				} catch (FileNotFoundException e) {
 					// TODO Auto-generated catch block
@@ -283,10 +284,11 @@ public class MainController {
 		}
 
 		if (event.getSource() == slider && mediaPlayer != null) {
-			mediaPlayer.seek(duration.multiply(slider.getValue() / 100)); // Here it is (bug on seek because of bitrate)!!!
+			mediaPlayer.seek(duration.multiply(slider.getValue() / 100)); // Here it is (bug on seek because of
+																			// bitrate)!!!
 		}
 
-		if (event.getSource() == volumeSlider && mediaPlayer != null) {   //that was easy
+		if (event.getSource() == volumeSlider && mediaPlayer != null) { // that was easy
 			mediaPlayer.setVolume(volumeSlider.getValue() / 100.0);
 		}
 
@@ -326,7 +328,7 @@ public class MainController {
 
 	}
 
-	private void setEnd() {            //set next song when current song is finished
+	private void setEnd() { // set next song when current song is finished
 		mediaPlayer.setOnEndOfMedia(() -> {
 			if (playlist.size() > 1) {
 				int index = getCurrentIndex();
@@ -367,7 +369,7 @@ public class MainController {
 				new FileChooser.ExtensionFilter("AAC", "*.aac"), new FileChooser.ExtensionFilter("MP4", "*.mp4"));
 	}
 
-	protected void updateValues() {    //constant update of values for time slider when a song plays
+	protected void updateValues() { // constant update of values for time slider when a song plays
 		if (music_now != null && slider != null && volumeSlider != null && duration != null && mediaPlayer != null) {
 			Platform.runLater(new Runnable() {
 				@SuppressWarnings("deprecation")
@@ -385,7 +387,7 @@ public class MainController {
 
 	}
 
-	private int getCurrentIndex() {    //current index of the song that is playing
+	private int getCurrentIndex() { // current index of the song that is playing
 		for (int i = 0; i < playlist.size(); i++) {
 			if (mediaPlayer.getMedia().getSource().equals(playlist.get(i).toURI().toString())) {
 				return i;
@@ -394,7 +396,7 @@ public class MainController {
 		return -1;
 	}
 
-	private static String formatTime(Duration elapsed, Duration duration) {  //format time for labels
+	private static String formatTime(Duration elapsed, Duration duration) { // format time for labels
 		int intElapsed = (int) Math.floor(elapsed.toSeconds());
 		int elapsedHours = intElapsed / (60 * 60);
 		if (elapsedHours > 0) {
