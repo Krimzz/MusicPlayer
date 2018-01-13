@@ -26,13 +26,14 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class MainController {
-	FileChooser browser = new FileChooser();
-	ArrayList<File> playlist = new ArrayList<File>();
-	MediaPlayer mediaPlayer;
-	Media sound;
+	private FileChooser browser = new FileChooser();
+	private ArrayList<File> playlist = new ArrayList<File>();
+	private MediaPlayer mediaPlayer;
+	private Media sound;
 	private int currPlay = -1;
 	private Duration duration;
 	private Duration currentTime;
+	private boolean configured = false;
 
 	@FXML
 	private AnchorPane paneMusic;
@@ -187,7 +188,10 @@ public class MainController {
 		}
 
 		if (event.getSource() == addButton) { // DONEEEEEEEEEEEEE
-			configureFileChooser(browser);
+			if(configured == false) {
+				configured = true;
+				configureFileChooser(browser);
+			}
 			Stage stage = (Stage) ((JFXButton) event.getSource()).getScene().getWindow();
 			File file = browser.showOpenDialog(stage);
 			if (file != null && !playlist.stream().anyMatch((a) -> {
@@ -216,7 +220,6 @@ public class MainController {
 		}
 
 		if (event.getSource() == importButton) { // DONEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-			configureFileChooser(browser);
 			Stage stage = (Stage) ((JFXButton) event.getSource()).getScene().getWindow();
 			FileChooser fileChooser = new FileChooser();
 			FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
